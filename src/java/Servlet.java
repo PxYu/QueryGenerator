@@ -39,11 +39,17 @@ public class Servlet extends HttpServlet {
             //do initialization
             //notice the path string 
             //String path = System.getenv("QG_PATH");
-            String path = "/Users/Lucius/Documents/data";
-            String ReferencePath = path + "/data/Reference-Model";
-            String dmozPath = path + "/lucene-DMOZ-index";
-            String docPath = path + "/data/ODP-doc-content.xml";
-            String idfPath = path + "/AOL-Dictionary";
+//            String path = "/zf8/hw5x/wrk/projects/Web/ChromeExtData";
+//            String ReferencePath = path + "/data/Reference-Model";
+//            String dmozPath = path + "/lucene-DMOZ-index";
+//            String docPath = path + "/data/ODP-doc-content.xml";
+//            String idfPath = path + "/AOL-Dictionary";
+
+            String path = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\QueryGenerator\\data";
+            String ReferencePath = path + "\\data\\Reference-Model";
+            String dmozPath = path + "\\lucene-DMOZ-index";
+            String docPath = path + "\\data\\ODP-doc-content.xml";
+            String idfPath = path + "\\AOL-Dictionary";
             
             HashMap<String, Double> refModel = Util.loadRefModel(ReferencePath);
             LoadLanguageModel llm = new LoadLanguageModel(refModel, false, false);
@@ -132,9 +138,9 @@ public class Servlet extends HttpServlet {
                 ArrayList<Query> coverQueries;
                 int sessionNo = 0;
                 int actionNo = 0;
-                String sentToPython = "null";
-                String pythonQuery = null;
-                Query pQuery = new Query();
+//                String sentToPython = "null";
+//                String pythonQuery = null;
+//                Query pQuery = new Query();
                 Map<String, String> map = new LinkedHashMap<>();
                 
                 // get java cover queries
@@ -157,7 +163,7 @@ public class Servlet extends HttpServlet {
                         } else {
                             coverQueries = IAP.getCoverQueriesIfSeqEdited(curQuery, qd.getCoverQueryList(), numCover, sequentialEdited);
                         }
-                        sentToPython = qd.getPythonQuery().getQueryText();
+//                        sentToPython = qd.getPythonQuery().getQueryText();
                     } else {
                         // different session
                         coverQueries = IAP.getCoverQueries(curQuery, numCover);
@@ -166,12 +172,12 @@ public class Servlet extends HttpServlet {
                 }
                 
                 // get query from python program
-                try {
-                    pythonQuery = JDBC.getCover(sentToPython);
-                    pQuery = IAP.getQueryTopic(pythonQuery);
-                } catch (Exception ex) {
-                    Logger.getLogger(Servlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    pythonQuery = JDBC.getCover(sentToPython);
+//                    pQuery = IAP.getQueryTopic(pythonQuery);
+//                } catch (Exception ex) {
+//                    Logger.getLogger(Servlet.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                 
                 // respond to users as soon as possible
                 try {
@@ -184,9 +190,9 @@ public class Servlet extends HttpServlet {
                 if (null != curQuery.getQueryTopic()) {
                     map.put("input", curQuery.getQueryTopic());
                 }
-                if (null != pQuery.getQueryTopic()) {
-                    map.put(pQuery.getQueryText(), pQuery.getQueryTopic());
-                }
+//                if (null != pQuery.getQueryTopic()) {
+//                    map.put(pQuery.getQueryText(), pQuery.getQueryTopic());
+//                }
                 String json = new Gson().toJson(map);
                 response.getWriter().write(json);
                 
@@ -196,7 +202,7 @@ public class Servlet extends HttpServlet {
                     for (Query q: coverQueries) {
                         JDBC.saveQuery(q, actionNo, sessionNo, 1, uid, time);
                     }
-                    JDBC.saveQuery(pQuery, actionNo, sessionNo, 2, uid, time);
+//                    JDBC.saveQuery(pQuery, actionNo, sessionNo, 2, uid, time);
                 }
                 
                 // update user profile using query

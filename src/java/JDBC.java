@@ -25,7 +25,7 @@ public class JDBC {
     
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/chrome?verifyServerCertificate=false&useSSL=true";
-    static final String USER = "puxuan";
+    static final String USER = "root";
     static final String PASS = "astro611";
  
     
@@ -319,7 +319,7 @@ public class JDBC {
 
         String USER_AGENT = "Mozilla/5.0";   
         String q = URLEncoder.encode(query, "UTF-8");
-        String urlString = "http://120.77.42.144:8000/cover/?query=" + q;
+        String urlString = "http://localhost:8000/cover/?query=" + q;
 
         URL url = new URL(urlString);
         try {
