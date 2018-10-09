@@ -25,10 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.*;
 
-/**
- *
- * @author aceni
- */
 @WebServlet(urlPatterns = {"/QueryGenerator"})
 public class Servlet extends HttpServlet {
    
@@ -39,17 +35,17 @@ public class Servlet extends HttpServlet {
             //do initialization
             //notice the path string 
             //String path = System.getenv("QG_PATH");
-//            String path = "/zf8/hw5x/wrk/projects/Web/ChromeExtData";
-//            String ReferencePath = path + "/data/Reference-Model";
-//            String dmozPath = path + "/lucene-DMOZ-index";
-//            String docPath = path + "/data/ODP-doc-content.xml";
-//            String idfPath = path + "/AOL-Dictionary";
+            String path = "/zf8/hw5x/wrk/projects/Web/ChromeExtData";
+            String ReferencePath = path + "/data/Reference-Model";
+            String dmozPath = path + "/lucene-DMOZ-index";
+            String docPath = path + "/data/ODP-doc-content.xml";
+            String idfPath = path + "/AOL-Dictionary";
 
-            String path = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\QueryGenerator\\data";
-            String ReferencePath = path + "\\data\\Reference-Model";
-            String dmozPath = path + "\\lucene-DMOZ-index";
-            String docPath = path + "\\data\\ODP-doc-content.xml";
-            String idfPath = path + "\\AOL-Dictionary";
+//            String path = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\QueryGenerator\\data";
+//            String ReferencePath = path + "\\data\\Reference-Model";
+//            String dmozPath = path + "\\lucene-DMOZ-index";
+//            String docPath = path + "\\data\\ODP-doc-content.xml";
+//            String idfPath = path + "\\AOL-Dictionary";
             
             HashMap<String, Double> refModel = Util.loadRefModel(ReferencePath);
             LoadLanguageModel llm = new LoadLanguageModel(refModel, false, false);
@@ -133,7 +129,7 @@ public class Servlet extends HttpServlet {
 
                 String uid = request.getParameter("uid");
                 String query = request.getParameter("query");
-                int numCover = Integer.parseInt(request.getParameter("numcover")) - 1;
+                int numCover = Integer.parseInt(request.getParameter("numcover"));
                 Query curQuery = IAP.getQueryTopic(query);
                 ArrayList<Query> coverQueries;
                 int sessionNo = 0;
@@ -144,7 +140,7 @@ public class Servlet extends HttpServlet {
                 Map<String, String> map = new LinkedHashMap<>();
                 
                 // get java cover queries
-                if (JDBC.getPreviousCoverQueryData(uid) == null) {
+                if (null == JDBC.getPreviousCoverQueryData(uid)) {
                     // first query ever
                     coverQueries = IAP.getCoverQueries(curQuery, numCover);
                     //

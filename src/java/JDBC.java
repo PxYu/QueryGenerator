@@ -17,16 +17,14 @@ import edu.virginia.cs.object.Query;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author aceni
- */
 public class JDBC {
     
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/chrome?verifyServerCertificate=false&useSSL=true";
-    static final String USER = "root";
-    static final String PASS = "astro611";
+    static final String USER = "chrome";
+    static final String PASS = "sigir18demo";
+//    static final String USER = "root";
+//    static final String PASS = "astro611";
  
     
     public static void registerUser(String uid) {
@@ -37,7 +35,7 @@ public class JDBC {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT INTO Users VALUES (?,?)";
+            sql = "INSERT INTO users VALUES (?,?)";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setString(1, uid);
                 statement.setString(2, "");
@@ -74,7 +72,7 @@ public class JDBC {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT profile FROM Users WHERE userID = ?";
+            sql = "SELECT profile FROM users WHERE userID = ?";
             ResultSet rs;
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, uid);
@@ -125,7 +123,7 @@ public class JDBC {
             stmt = conn.createStatement();
             String sql;
             ResultSet rs;
-            sql = "SELECT * FROM Queries WHERE actionID = (SELECT MAX(actionID) FROM Queries WHERE userID = ?) AND userID = ?";
+            sql = "SELECT * FROM queries WHERE actionID = (SELECT MAX(actionID) FROM queries WHERE userID = ?) AND userID = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, uid);
             statement.setString(2, uid);
@@ -198,7 +196,7 @@ public class JDBC {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT INTO Clicks VALUES (?,?,?,?,?,?,?)";
+            sql = "INSERT INTO clicks VALUES (?,?,?,?,?,?,?)";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setString(1, uid);
                 statement.setString(2, url);
@@ -239,7 +237,7 @@ public class JDBC {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
             String sql;
-            sql = "INSERT INTO Queries VALUES (?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO queries VALUES (?,?,?,?,?,?,?,?)";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setInt(1, a);
                 statement.setInt(2, s);
@@ -282,7 +280,7 @@ public class JDBC {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
             String sql;
-            sql = "UPDATE Users SET profile = ? WHERE userID = ?";
+            sql = "UPDATE users SET profile = ? WHERE userID = ?";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setString(1, profile);
                 statement.setString(2, uid);
